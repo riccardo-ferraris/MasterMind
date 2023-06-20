@@ -20,22 +20,32 @@ class _RightChoicesRowState extends State<RightChoicesRow> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          width: 30,
-          height: 30,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             color: Colors.green,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(50),
           ),
-          child: Center(child: Text(widget.rightNumbers)),
+          child: Center(
+            child: Text(
+              widget.rightNumbers,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
         Container(
-          width: 30,
-          height: 30,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             color: Colors.orange,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(50),
           ),
-          child: Center(child: Text(widget.rightNumbersAtRightPosition)),
+          child: Center(
+            child: Text(
+              widget.rightNumbersAtRightPosition,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
       ],
     );

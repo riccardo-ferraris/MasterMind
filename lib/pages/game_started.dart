@@ -59,8 +59,19 @@ class _GameStartedState extends State<GameStarted> {
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text('Hai vinto!'),
-                content: Text(
-                    'La combinazione da indovinare era: ${widget.wordToGuess}'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('La combinazione da indovinare era: '),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      widget.wordToGuess,
+                      style: const TextStyle(fontSize: 30),
+                    ),
+                  ],
+                ),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -217,6 +228,9 @@ class _GameStartedState extends State<GameStarted> {
   int _currentValue2 = 0;
   int _currentValue3 = 0;
 
+  int rowCount = 0;
+  int colCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -245,40 +259,39 @@ class _GameStartedState extends State<GameStarted> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 1.3,
+                    child: Column(
+                      verticalDirection: VerticalDirection.up,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        10,
+                        (index) => RightChoicesRow(
+                          rightNumbersAtRightPosition:
+                              circleListRightNumbersAtRightPosition[index],
+                          rightNumbers: circleListRightNumbers[index],
+                        ),
                       ),
-                      itemBuilder: (context, index) => RightChoicesRow(
-                        rightNumbersAtRightPosition:
-                            circleListRightNumbersAtRightPosition[index],
-                        rightNumbers: circleListRightNumbers[index],
-                      ),
-                      itemCount: 10,
-                      reverse: true,
-                      padding: const EdgeInsets.all(15),
                     ),
                   ),
                   Expanded(
                     flex: 3,
                     child: Container(
                       color: Colors.blue[800],
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          crossAxisSpacing: 30,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1,
-                        ),
-                        itemBuilder: (context, index) =>
-                            Square(index: squareList[index]),
-                        reverse: true,
-                        itemCount: 4 * 10,
-                        padding: const EdgeInsets.all(15),
-                        physics: const NeverScrollableScrollPhysics(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          for (rowCount = 0; rowCount < 4; rowCount++)
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              verticalDirection: VerticalDirection.up,
+                              children: [
+                                for (colCount = 0; colCount < 10; colCount++)
+                                  Square(
+                                    number:
+                                        squareList[rowCount + (4 * colCount)],
+                                  ),
+                              ],
+                            ),
+                        ],
                       ),
                     ),
                   ),
